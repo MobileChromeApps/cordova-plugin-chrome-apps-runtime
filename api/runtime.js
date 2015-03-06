@@ -52,8 +52,7 @@ exports.getManifest = function() {
     xhr.open('GET', path, false);
     xhr.send(null);
     if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300)) && xhr.responseText && xhr.responseText.length > 0) {
-      // Don't use JSON.parse, since it fails on comments.
-      manifestJson = eval('(' + xhr.responseText + ')');
+      manifestJson = JSON.parse(xhr.responseText);
     } else {
       manifestJson = null;
     }
