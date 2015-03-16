@@ -61,14 +61,18 @@ exports.getManifest = function() {
     xhr.open('GET', path, false);
     xhr.send(null);
     if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300)) && xhr.responseText && xhr.responseText.length > 0) {
-      // Strip comments in a mostly-works kind of way.
-      // Can't use eval() due to CSP.
-      var manifestNoComments = stripComments(xhr.responseText);
       try {
-        manifestJson = JSON.parse(manifestNoComments);
+        // Manifest should always be comment-free when working with cca, since cca writes it in a build step.
+        manifestJson = JSON.parse(xhr.responseText);
       } catch (e) {
-        console.error('Failed to parse manifest.json (syntax error?): ' + e);
-        throw e;
+        try {
+          // But for CADT, it can still contain comments.
+          var manifestNoComments = stripComments(xhr.responseText);
+          manifestJson = JSON.parse(manifestNoComments);
+        } catch (e) {
+          console.error('Failed to parse manifest.json (syntax error?): ' + e);
+          throw e;
+        }
       }
     } else {
       manifestJson = null;
