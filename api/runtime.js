@@ -44,6 +44,15 @@ exports.onSuspendCanceled.addListener = function(f) {
   exports.onSuspendCanceled.addListener(f);
 };
 
+var STRIP_PATTERN = /((["'])(?:(?:\\\\)|\\\2|(?!\\\2)\\|(?!\2).|[\n\r])*\2)|(\/\*(?:(?!\*\/).|[\n\r])*\*\/)|(\/\/[^\n\r]*[\n\r]+)/g;
+
+function stripComments(manifestData) {
+  // http://stackoverflow.com/questions/5989315/regex-for-match-replacing-javascript-comments-both-multiline-and-inline
+  return manifestData.replace(STRIP_PATTERN, function(match, $1) {
+    return typeof $1 != 'undefined' ? $1 : '';
+  });
+}
+
 exports.getManifest = function() {
   if (typeof manifestJson == 'undefined') {
     var xhr = new XMLHttpRequest();
@@ -52,7 +61,15 @@ exports.getManifest = function() {
     xhr.open('GET', path, false);
     xhr.send(null);
     if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300)) && xhr.responseText && xhr.responseText.length > 0) {
-      manifestJson = JSON.parse(xhr.responseText);
+      // Strip comments in a mostly-works kind of way.
+      // Can't use eval() due to CSP.
+      var manifestNoComments = stripComments(xhr.responseText);
+      try {
+        manifestJson = JSON.parse(manifestNoComments);
+      } catch (e) {
+        console.error('Failed to parse manifest.json (syntax error?): ' + e);
+        throw e;
+      }
     } else {
       manifestJson = null;
     }
