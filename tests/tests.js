@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-registerManualTests('chrome.runtime', function(rootEl, addButton) {
+exports.defineManualTests = function(rootEl, addButton) {
   addButton('Attach onSuspend', function() {
     chrome.runtime.onSuspend.addListener(function() {
       logger('onSuspend fired.');
@@ -19,4 +19,4 @@ registerManualTests('chrome.runtime', function(rootEl, addButton) {
       logger(JSON.stringify(platformInfo, null, 4));
     });
   });
-});
+};
