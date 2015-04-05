@@ -26,6 +26,7 @@ exports.defineManualTests = function(rootEl, addButton) {
 exports.defineAutoTests = function() {
   'use strict';
 
+  describe("chrome.runtime", function() {
   it('getManifest() should have a name that is a string', function() {
     var manifest = chrome.runtime.getManifest();
     expect(typeof manifest.name).toBe('string'); // .isEqual(jasmine.any(String)) seems to not work
@@ -84,4 +85,11 @@ exports.defineAutoTests = function() {
   itShouldHaveAPropertyOfType(chrome.runtime, 'id', 'string');
   itShouldHaveAPropertyOfType(chrome.runtime, 'reload', 'function');
   itShouldHaveAPropertyOfType(chrome.runtime, 'requestUpdateCheck', 'function');
+  });
+
+  describe('chrome.app.runtime', function() {
+    it('should have onLaunched exist', function() {
+      expect(chrome.app.runtime.onLaunched).not.toBeUndefined();
+    });
+  });
 };
