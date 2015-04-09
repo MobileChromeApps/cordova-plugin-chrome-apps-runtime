@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/* global logger */
-
 exports.defineManualTests = function(rootEl, addButton) {
   addButton('Attach onSuspend', function() {
     chrome.runtime.onSuspend.addListener(function() {
@@ -25,6 +23,8 @@ exports.defineManualTests = function(rootEl, addButton) {
 
 exports.defineAutoTests = function() {
   'use strict';
+
+  require('cordova-plugin-chrome-apps-test-framework.jasmine_helpers').addJasmineHelpers();
 
   describe("chrome.runtime", function() {
   it('getManifest() should have a name that is a string', function() {
