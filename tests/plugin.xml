@@ -10,5 +10,6 @@
 
   <name>Chrome App Runtime</name>
   <js-module src="tests.js" name="tests">
+    <runs/>
   </js-module>
 </plugin>
