@@ -5,7 +5,7 @@
 exports.defineManualTests = function(rootEl, addButton) {
   addButton('Attach onSuspend', function() {
     chrome.runtime.onSuspend.addListener(function() {
-      logger('onSuspend fired.');
+      console.log('onSuspend fired.');
     });
   });
 
@@ -15,8 +15,8 @@ exports.defineManualTests = function(rootEl, addButton) {
 
   addButton('chrome.runtime.getPlatformInfo()', function() {
     chrome.runtime.getPlatformInfo(function(platformInfo) {
-      logger("Platform OS: " + platformInfo.os);
-      logger(JSON.stringify(platformInfo, null, 4));
+      console.log("Platform OS: " + platformInfo.os);
+      console.log(JSON.stringify(platformInfo, null, 4));
     });
   });
 };
