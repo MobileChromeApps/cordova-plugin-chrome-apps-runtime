@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 var argscheck = cordova.require('cordova/argscheck');
-var Event = require('org.chromium.common.events');
-var helpers = require('org.chromium.common.helpers');
-var stubs = require('org.chromium.common.stubs');
+var Event = require('cordova-plugin-chrome-apps-common.events');
+var helpers = require('cordova-plugin-chrome-apps-common.helpers');
+var stubs = require('cordova-plugin-chrome-apps-common.stubs');
 
 var manifestJson;
 
@@ -89,7 +89,7 @@ exports.setManifest = function(manifest) {
 
 exports.getBackgroundPage = function(callback) {
   try {
-    var mobile = require('org.chromium.bootstrap.mobile.impl');
+    var mobile = require('cordova-plugin-chrome-apps-bootstrap.mobile.impl');
   } catch(e) {}
   argscheck.checkArgs('f', 'chrome.runtime.getBackgroundPage', arguments);
   setTimeout(function() {
