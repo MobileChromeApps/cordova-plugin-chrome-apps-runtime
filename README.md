@@ -3,6 +3,10 @@
 Implements the `chrome.runtime` and `chrome.app.runtime` namespaces.
 
 # Release Notes
+
+## 1.1.1 (April 30, 2015)
+- Renamed plugin to pubilsh to NPM
+
 ## 1.1.0 (Mar 17, 2015)
 * Parse manifest via JSON.parse for CSP-complaince
 
