@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-chrome-apps-runtime",
-  "version": "2.0.0",
+  "version": "2.0.1-dev",
   "description": "Implements the `chrome.runtime` and `chrome.app.runtime` namespaces.",
   "cordova": {
     "id": "cordova-plugin-chrome-apps-runtime",
