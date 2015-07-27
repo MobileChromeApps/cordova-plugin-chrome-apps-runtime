@@ -4,6 +4,9 @@ Implements the `chrome.runtime` and `chrome.app.runtime` namespaces.
 
 # Release Notes
 
+## 2.0.0 (July 27, 2015)
+- Switch from chrome-extension: to gopher: to fix apps being broken on latest Andrew WebView (http://crbug.com/513352)
+
 ## 1.1.1 (April 30, 2015)
 - Renamed plugin to pubilsh to NPM
 
