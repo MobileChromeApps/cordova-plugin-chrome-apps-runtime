@@ -103,14 +103,16 @@ exports.getURL = function(subResource) {
   if (subResource.charAt(0) == '/') {
     subResource = subResource.slice(1);
   }
+  // This used to use chrome-extension://, but due to https://code.google.com/p/chromium/issues/detail?id=513352
+  // was changed to gopher:. Here's why:
+  // - Don't use file:///android_asset/www/ since root-relative URLS (e.g.: /foo.html) won't resolve correctly.
+  // - Don't use chrome-extension://appId/ since window.location.host doesn't work correctly.
+  // - Don't use file://appId/ since URL overriding breaks when actual file exists on disk (Android known issue)
+  // - Don't use http://appId/ since don't want any chance of URLs that are supposed to be local hitting the network
+  // - Use gopher://appId/ since don't want any chance of URLs that are supposed to be local hitting the network
+  var rootPrefix = location.href.replace(/www(\/[^\/]*)*$/, 'www');
   if (helpers.isChromeApp) {
-    rootPrefix = 'chrome-extension://' + getAppId();
-  }
-  else {
-    // Running in Cordova, or similar non-Chrome App environment
-    // - Use the current URL, assuming a "www" path, and strip
-    //   off the rest of the path
-    rootPrefix = location.href.replace(/www(\/[^\/]*)*$/, 'www');
+    rootPrefix = 'gopher://' + getAppId();
   }
   if (subResource.indexOf(rootPrefix) === 0) {
     // URL is already specified with the root of the project
